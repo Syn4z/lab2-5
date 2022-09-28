@@ -1,5 +1,5 @@
 
-private class Player() {
+private class Player {
     protected var health = 100
 
     protected var armor = 0
@@ -17,26 +17,26 @@ private class Player() {
 private class View {
     protected var camera = listOf("Start")
 
-    fun look_up() {
-        camera += "Up"
+    fun lookUp() {
+        camera = camera + "Up"
     }
 
-    fun look_down() {
-        camera += "Down"
+    fun lookDown() {
+        camera = camera + "Down"
     }
 
-    fun look_right() {
-        camera += "Right"
+    fun lookRight() {
+        camera = camera + "Right"
     }
 
-    fun look_left() {
-        camera += "Left"
+    fun lookLeft() {
+        camera = camera + "Left"
     }
 
     init {
-        look_down()
-        look_up()
-        look_up()
+        lookDown()
+        lookUp()
+        lookUp()
         println(camera)
     }
 }
@@ -45,26 +45,26 @@ private class Move {
     protected var location = ""
 
     // code in each function for changing position of player
-    fun move_front() {
+    fun moveFront() {
         location = "Front"
     }
 
-    fun move_back() {
+    fun moveBack() {
         location = "Back"
     }
 
-    fun move_right() {
+    fun moveRight() {
         location = "Right"
     }
 
-    fun move_left() {
+    fun moveLeft() {
         location = "Left"
     }
 
     init {
-        move_back()
-        move_front()
-        move_right()
+        moveBack()
+        moveFront()
+        moveRight()
         println(location)
     }
 }
@@ -110,18 +110,18 @@ private class Shoot {
 }
 
 private class Weapons {
-    var ct_pistol = mapOf("USP-S" to 1, "Dual Berettas" to 2, "P250" to 3, "Five-SeveN" to 4, "Desert Eagle" to 5)
+    var ctPistol = mapOf("USP-S" to 1, "Dual Berettas" to 2, "P250" to 3, "Five-SeveN" to 4, "Desert Eagle" to 5)
 
-    var ct_heavy = mapOf("Nova" to 1, "XM1014" to 2, "MAG-7" to 3, "M249" to 4, "Negev" to 5)
+    var ctHeavy = mapOf("Nova" to 1, "XM1014" to 2, "MAG-7" to 3, "M249" to 4, "Negev" to 5)
 
-    var ct_smg = mapOf("MP9" to 1, "MP7" to 2, "UMP" to 3, "P90" to 4, "PP-Bizon" to 5)
+    var ctSmg = mapOf("MP9" to 1, "MP7" to 2, "UMP" to 3, "P90" to 4, "PP-Bizon" to 5)
 
-    var ct_rifle = mapOf("FAMAS" to 1, "M4A1-S" to 2, "SSG 08" to 3, "AUG" to 4, "AWP" to 5, "SCAR-20" to 6)
+    var ctRifle = mapOf("FAMAS" to 1, "M4A1-S" to 2, "SSG 08" to 3, "AUG" to 4, "AWP" to 5, "SCAR-20" to 6)
 
-    var ct_grenade = mapOf("Incendiary Grenade" to 1, "Decoy Grenade" to 2, "Flashbang" to 3, "High Explosive Grenade" to 4,
+    var ctGrenade = mapOf("Incendiary Grenade" to 1, "Decoy Grenade" to 2, "Flashbang" to 3, "High Explosive Grenade" to 4,
                             "Smoke Grenade" to 5)
 
-    var ct_equipment = mapOf("Kevlar Vest" to 1, "Kevlar + Helmet" to 2, "Zeus x27" to 3, "Defuse Kit" to 4)
+    var ctEquipment = mapOf("Kevlar Vest" to 1, "Kevlar + Helmet" to 2, "Zeus x27" to 3, "Defuse Kit" to 4)
 
     fun stats() {
         // need to get the stats for the specific gun in the directory
@@ -130,13 +130,13 @@ private class Weapons {
     }
 
     init {
-        println("Pistols are: $ct_pistol")
+        println("Pistols are: $ctPistol")
     }
 }
 
 private class Bomb {
     var bomb = true
-    var is_plant = false
+    var isPlant = false
 
     // function to drop the bomb
     fun drop() {
@@ -145,7 +145,7 @@ private class Bomb {
 
     // function to plant the bomb
     fun plant() {
-        is_plant = true
+        isPlant = true
     }
 
     init {
@@ -175,28 +175,28 @@ private class Radar {
 private class Buy {
     // Buy menu
     fun read() {
-        var category_choise = ""
+        var categoryChoise = ""
         println("What type of weapon do you want to buy? ")
-        val category_input = readLine()!!
-        when (category_input.toInt()) {
-            1 -> category_choise = "pistol"
-            2 -> category_choise = "heavy"
-            3 -> category_choise = "smg"
-            4 -> category_choise = "rifle"
-            5 -> category_choise = "grenade"
-            6 -> category_choise = "equipment"
+        val categoryInput = readLine()!!
+        when (categoryInput.toInt()) {
+            1 -> categoryChoise = "pistol"
+            2 -> categoryChoise = "heavy"
+            3 -> categoryChoise = "smg"
+            4 -> categoryChoise = "rifle"
+            5 -> categoryChoise = "grenade"
+            6 -> categoryChoise = "equipment"
             else -> "Not in categories!"
         }
         println("What model do you want to buy? ")
-        val type_input = readLine()!!
-        when (type_input.toInt()) {
+        val typeInput = readLine()!!
+        when (typeInput.toInt()) {
             // the specific model of a category
-            1 -> println("You bought a: $category_choise")
-            2 -> println("You bought a: $category_choise")
-            3 -> println("You bought a: $category_choise")
-            4 -> println("You bought a: $category_choise")
-            5 -> println("You bought a: $category_choise")
-            6 -> println("You bought a: $category_choise")
+            1 -> println("You bought a: $categoryChoise")
+            2 -> println("You bought a: $categoryChoise")
+            3 -> println("You bought a: $categoryChoise")
+            4 -> println("You bought a: $categoryChoise")
+            5 -> println("You bought a: $categoryChoise")
+            6 -> println("You bought a: $categoryChoise")
             else -> "Not in the models!"
         }
     }
@@ -228,7 +228,7 @@ private class Money {
 private class Kill {
     var source = ""
 
-    fun is_kill() {
+    fun isKill() {
         // variable for source of killing
         source = "Pistol"
     }
@@ -252,18 +252,18 @@ private class Kill {
 }
 
 private class PlayerTab {
-    var counter_terrorists = 5
+    var counterTerrorists = 5
     var terrorists = 5
 
     // changes the nr of ct and t when kill
     fun change() {
-        counter_terrorists -= 1
+        counterTerrorists -= 1
         terrorists -= 2
     }
 
     fun reload() {
         // resets the nr of ct and t after each round
-        counter_terrorists = 5
+        counterTerrorists = 5
         terrorists = 5
     }
 
