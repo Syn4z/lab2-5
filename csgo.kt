@@ -125,19 +125,18 @@ private class Weapons {
 
     fun stats() {
         // need to get the stats for the specific gun in the directory
+        // damage and armor penetration
+        // fire-rate and others
     }
 
-    fun damage() {}
-
-    fun armor_penetration() {}
-
     init {
-        println(ct_pistol)
+        println("Pistols are: $ct_pistol")
     }
 }
 
 private class Bomb {
     var bomb = true
+    var is_plant = false
 
     // function to drop the bomb
     fun drop() {
@@ -146,7 +145,7 @@ private class Bomb {
 
     // function to plant the bomb
     fun plant() {
-        var is_plant = true
+        is_plant = true
     }
 
     init {
@@ -174,6 +173,7 @@ private class Radar {
 }
 
 private class Buy {
+    // Buy menu
     fun read() {
         var category_choise = ""
         println("What type of weapon do you want to buy? ")
@@ -210,22 +210,44 @@ private class Money {
     var balance = 800
 
     // operations to extract or add money
+    fun win() {
+        balance += 200
+    }
+
+    fun lose() {
+        balance += 50
+    }
 
     init {
+        win()
+        lose()
         println("Your balance is: $balance")
     }
 }
 
 private class Kill {
     var source = ""
+
     fun is_kill() {
         // variable for source of killing
         source = "Pistol"
     }
 
+    fun suicide() {
+        source = "Yourself"
+    }
+
+    fun bomb() {
+        source = "Terrorist Bomb"
+    }
+
+    fun friendly() {
+        source = "Your smart teammate"
+    }
+
     init {
-        is_kill()
-        println("You have been killed with: $source")
+        friendly()
+        println("You have been killed by: $source")
     }
 }
 
@@ -237,6 +259,12 @@ private class PlayerTab {
     fun change() {
         counter_terrorists -= 1
         terrorists -= 2
+    }
+
+    fun reload() {
+        // resets the nr of ct and t after each round
+        counter_terrorists = 5
+        terrorists = 5
     }
 
     init {
