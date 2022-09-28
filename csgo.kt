@@ -1,16 +1,21 @@
 
-class Player {
-    var health = 100
+private class Player() {
+    protected var health = 100
 
-    var armor = 0
+    protected var armor = 0
 
-    val crosshiar = "dot"
+    val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
 
     var timer = 115
+
+    init {
+        println("Health = $health")
+        println("Armor = $armor")
+    }
 }
 
-class View {
-    var camera = listOf("Start")
+private class View {
+    protected var camera = listOf("Start")
 
     fun look_up() {
         camera += "Up"
@@ -27,10 +32,17 @@ class View {
     fun look_left() {
         camera += "Left"
     }
+
+    init {
+        look_down()
+        look_up()
+        look_up()
+        println(camera)
+    }
 }
 
-class Move {
-    var location = ""
+private class Move {
+    protected var location = ""
 
     // code in each function for changing position of player
     fun move_front() {
@@ -48,9 +60,16 @@ class Move {
     fun move_left() {
         location = "Left"
     }
+
+    init {
+        move_back()
+        move_front()
+        move_right()
+        println(location)
+    }
 }
 
-class Special {
+private class Special {
     var location = ""
     // code to change the vertical position of player
     fun jump() {
@@ -64,17 +83,33 @@ class Special {
     fun sneak() {
         location = "Sneak"
     }
-}
 
-class Shoot {
-    /*private*/ fun shot() {
-        println("You've been shot!")
-        Player().health -= 50
-        Player().armor -= 30
+    init {
+        crouch()
+        sneak()
+        jump()
+        println(location)
     }
 }
 
-class Weapons {
+private class Shoot {
+    var health = 100
+
+    var armor = 0
+
+    fun shot() {
+        println("You've been shot!")
+        // different conditions for each of weapons
+        health -= 50
+        armor -= 30
+    }
+
+    init {
+        shot()
+    }
+}
+
+private class Weapons {
     var ct_pistol = mapOf("USP-S" to 1, "Dual Berettas" to 2, "P250" to 3, "Five-SeveN" to 4, "Desert Eagle" to 5)
 
     var ct_heavy = mapOf("Nova" to 1, "XM1014" to 2, "MAG-7" to 3, "M249" to 4, "Negev" to 5)
@@ -88,16 +123,20 @@ class Weapons {
 
     var ct_equipment = mapOf("Kevlar Vest" to 1, "Kevlar + Helmet" to 2, "Zeus x27" to 3, "Defuse Kit" to 4)
 
-    private fun stats() {
+    fun stats() {
         // need to get the stats for the specific gun in the directory
     }
 
-    private fun damage() {}
+    fun damage() {}
 
-    private fun armor_penetration() {}
+    fun armor_penetration() {}
+
+    init {
+        println(ct_pistol)
+    }
 }
 
-class Bomb {
+private class Bomb {
     var bomb = true
 
     // function to drop the bomb
@@ -109,12 +148,17 @@ class Bomb {
     fun plant() {
         var is_plant = true
     }
+
+    init {
+        drop()
+        println(bomb)
+    }
 }
 
-class Radar {
+private class Radar {
     var map = ""
     // function to display the map
-    fun dispay() {
+    fun display() {
         map = "1"
     }
 
@@ -122,10 +166,15 @@ class Radar {
     fun adjust() {
         map = "2"
     }
+
+    init {
+        display()
+        println(map)
+    }
 }
 
-class Buy {
-    /*private*/ fun read() {
+private class Buy {
+    fun read() {
         var category_choise = ""
         println("What type of weapon do you want to buy? ")
         val category_input = readLine()!!
@@ -142,86 +191,83 @@ class Buy {
         val type_input = readLine()!!
         when (type_input.toInt()) {
             // the specific model of a category
-            1 -> println("You bought a: " + category_choise)
-            2 -> println("You bought a: " + category_choise)
-            3 -> println("You bought a: " + category_choise)
-            4 -> println("You bought a: " + category_choise)
-            5 -> println("You bought a: " + category_choise)
-            6 -> println("You bought a: " + category_choise)
+            1 -> println("You bought a: $category_choise")
+            2 -> println("You bought a: $category_choise")
+            3 -> println("You bought a: $category_choise")
+            4 -> println("You bought a: $category_choise")
+            5 -> println("You bought a: $category_choise")
+            6 -> println("You bought a: $category_choise")
             else -> "Not in the models!"
         }
     }
-}
 
-class Money {
-    var balance = 800
-
-    // operations to extract or add money
-}
-
-class Kill {
-    /*private*/ fun is_kill() {
-        // variable for source of killing
-        val source = "Pistol"
-
-        println(source)
+    init {
+        read()
     }
 }
 
-class PlayerTab {
-    var counter_terorists = 5
+private class Money {
+    var balance = 800
+
+    // operations to extract or add money
+
+    init {
+        println("Your balance is: $balance")
+    }
+}
+
+private class Kill {
+    var source = ""
+    fun is_kill() {
+        // variable for source of killing
+        source = "Pistol"
+    }
+
+    init {
+        is_kill()
+        println("You have been killed with: $source")
+    }
+}
+
+private class PlayerTab {
+    var counter_terrorists = 5
     var terrorists = 5
 
     // changes the nr of ct and t when kill
     fun change() {
-        counter_terorists -= 1
+        counter_terrorists -= 1
         terrorists -= 2
+    }
+
+    init {
+        change()
+        println("Terrorists: $terrorists")
     }
 }
 
 fun main() {
     val obj = Player()
-    println("Health: " + obj.health)
-    println("Armor: " + obj.armor)
 
     val obj1 = View()
-    obj1.look_down()
-    obj1.look_left()
-    println("Look: " +obj1.camera)
 
     val obj2 = Move()
-    obj2.move_front()
-    println("Move: " + obj2.location)
 
     val obj3 = Special()
-    obj3.crouch()
-    println("Crouch: " + obj3.location)
 
     val obj4 = Shoot()
-    obj4.shot()
 
     val obj5 = Buy()
-    obj5.read()
 
     val obj6 = Money()
-    println("Balance: " + obj6.balance)
 
     val obj7 = Kill()
-    print("You have been killed with: ")
-    obj7.is_kill()
 
     val obj8 = Weapons()
-    println("Weapon: " + obj8.ct_pistol)
 
     val obj9 = Bomb()
-    obj9.drop()
-    println("Bomb: " + obj9.bomb)
 
     val obj10 = Radar()
-    obj10.adjust()
-    println("Map: " + obj10.map)
 
     val obj11 = PlayerTab()
-    obj11.change()
-    println("Terrorists: " + obj11.terrorists)
+
 }
