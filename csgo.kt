@@ -1,26 +1,27 @@
 import kotlin.random.Random
+import kotlin.system.exitProcess
 
 open class Game {
     var health = 100
     var armor = 0
-    val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
+    var playerCrosshair = ""
     val timer = 115
-    var counterTerrorists = 0
-    var terrorists = 0
+    var counterTerrorists = 5
+    var terrorists = 5
 }
 
 open class Player: Game() {
-    var playerCrosshair = ""
+    private val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
     var playerPosition = listOf(0,0)
 
-    open fun teamChoice(): Boolean {
+    fun teamChoice(): Boolean {
         var result = true
         val choice = (0..1).random()
         if (choice == 0) {
-            counterTerrorists += 1
+            counterTerrorists =+ 1
         }
         else if (choice == 1) {
-            terrorists += 1
+            terrorists =+ 1
             result = false
         }
 
@@ -262,12 +263,17 @@ class Kill: Shoot() {
     var source = ""
 
     fun isKill() {
-        if (health <= 0 && teamChoice()) {
-            source = "Pistol"
-            counterTerrorists -= 1
+        if ((counterTerrorists > 0) && (terrorists > 0)) {
+            var choice = (0..1).random()
+            if ((health <= 0) && (choice == 0)) {
+                source = "Pistol"
+                counterTerrorists -= 1
+            } else if ((health <= 0) && (choice == 1)) {
+                terrorists -= 1
+            }
         }
-        else if (health <= 0 && !teamChoice()) {
-            terrorists -= 1
+        else {
+            exitProcess(0)
         }
     }
 
@@ -287,11 +293,13 @@ class Kill: Shoot() {
 
 fun main() {
     val obj = Kill()
-    obj.teamChoice()
-    obj.shot()
+
     obj.shot()
     obj.shot()
     obj.showHealth()
+    println("CounterTerrorists: ${obj.counterTerrorists}")
+    println("Terrorists: ${obj.terrorists}")
+    obj.isKill()
     println("CounterTerrorists: ${obj.counterTerrorists}")
     println("Terrorists: ${obj.terrorists}")
     obj.isKill()
