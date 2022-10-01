@@ -1,75 +1,81 @@
+import kotlin.random.Random
 
-private class Player {
-    protected var health = 100
-
-    protected var armor = 0
-
+open class Game {
+    var health = 100
+    var armor = 0
     val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
-
-    var timer = 115
-
-    init {
-        println("Health = $health")
-        println("Armor = $armor")
-    }
+    val timer = 115
+    var counterTerrorists = 0
+    var terrorists = 0
 }
 
-private class View {
-    protected var camera = listOf("Start")
+open class Player: Game() {
+    var playerCrosshair = ""
+    var playerPosition = listOf(0,0)
 
-    fun lookUp() {
-        camera = camera + "Up"
+    open fun teamChoice(): Boolean {
+        var result = true
+        val choice = (0..1).random()
+        if (choice == 0) {
+            counterTerrorists += 1
+        }
+        else if (choice == 1) {
+            terrorists += 1
+            result = false
+        }
+
+        return result
     }
 
-    fun lookDown() {
-        camera = camera + "Down"
+    fun showHealth() {
+        println("Your health is : $health")
     }
 
-    fun lookRight() {
-        camera = camera + "Right"
+    fun showArmor() {
+        println("Your armor is : $armor")
     }
 
-    fun lookLeft() {
-        camera = camera + "Left"
+    fun showCrosshair() {
+        println("Choose your crosshair: ")
+        val playerInput = readLine()!!
+        when (playerInput.toInt()) {
+            1 -> playerCrosshair = crosshair.filterValues { it == 1 }.keys.toString()
+            2 -> playerCrosshair = crosshair.filterValues { it == 2 }.keys.toString()
+            3 -> playerCrosshair = crosshair.filterValues { it == 3 }.keys.toString()
+            4 -> playerCrosshair = crosshair.filterValues { it == 4 }.keys.toString()
+        }
     }
 
-    init {
-        lookDown()
-        lookUp()
-        lookUp()
-        println(camera)
+    fun showTimer() {
+        for (time in timer..0) {
+            println(time)
+        }
     }
+
 }
 
-private class Move {
-    protected var location = ""
+class Move: Player() {
 
     // code in each function for changing position of player
     fun moveFront() {
-        location = "Front"
+
     }
 
     fun moveBack() {
-        location = "Back"
+
     }
 
     fun moveRight() {
-        location = "Right"
+
     }
 
     fun moveLeft() {
-        location = "Left"
+
     }
 
-    init {
-        moveBack()
-        moveFront()
-        moveRight()
-        println(location)
-    }
 }
 
-private class Special {
+class Special: Player() {
     var location = ""
     // code to change the vertical position of player
     fun jump() {
@@ -92,22 +98,21 @@ private class Special {
     }
 }
 
-private class Shoot {
-    var health = 100
-
-    var armor = 0
+open class Shoot: Player() {
 
     fun shot() {
         println("You've been shot!")
         // different conditions for each of weapons
         health -= 50
-        armor -= 30
+
+        if (armor != 0) {
+            armor -= 30
+        }
     }
 
-    init {
-        shot()
-    }
-open class Weapons {
+}
+
+open class Weapons: Game() {
 
     var ctPistol = mapOf("USP-S" to 1, "Dual Berettas" to 2, "P250" to 3, "Five-SeveN" to 4, "Desert Eagle" to 5)
 
@@ -122,12 +127,9 @@ open class Weapons {
 
     var ctEquipment = mapOf("Kevlar Vest" to 1, "Kevlar + Helmet" to 2, "Zeus x27" to 3, "Defuse Kit" to 4)
 
-    init {
-        println("Pistols are: $ctPistol")
-    }
 }
 
-private class Stats: Weapons() {
+class Stats: Weapons() {
 
     var ammo = ""
 
@@ -152,9 +154,8 @@ private class Stats: Weapons() {
         // damage and armor penetration
         // fire-rate and others
 }
-}
 
-private class Bomb {
+class Bomb: Game() {
     var bomb = true
     var isPlant = false
 
@@ -174,7 +175,7 @@ private class Bomb {
     }
 }
 
-private class Radar {
+class Radar: Game() {
     var map = ""
     // function to display the map
     fun display() {
@@ -192,7 +193,18 @@ private class Radar {
     }
 }
 
-private class Buy {
+class Buy: Weapons() {
+
+    var balance = 800
+
+    // operations to extract or add money
+    fun win() {
+        balance += 200
+    }
+
+    fun lose() {
+        balance += 50
+    }
     // Buy menu
     fun read() {
         var categoryChoice = ""
@@ -226,54 +238,7 @@ private class Buy {
     }
 }
 
-private class Money {
-    var balance = 800
-
-    // operations to extract or add money
-    fun win() {
-        balance += 200
-    }
-
-    fun lose() {
-        balance += 50
-    }
-
-    init {
-        win()
-        lose()
-        println("Your balance is: $balance")
-    }
-}
-
-private class Kill {
-    var source = ""
-
-    fun isKill() {
-        // variable for source of killing
-        source = "Pistol"
-    }
-
-    fun suicide() {
-        source = "Yourself"
-    }
-
-    fun bomb() {
-        source = "Terrorist Bomb"
-    }
-
-    fun friendly() {
-        source = "Your smart teammate"
-    }
-
-    init {
-        friendly()
-        println("You have been killed by: $source")
-    }
-}
-
-private class PlayerTab {
-    var counterTerrorists = 5
-    var terrorists = 5
+class PlayerTab: Player() {
 
     // changes the nr of ct and t when kill
     fun change() {
@@ -293,29 +258,66 @@ private class PlayerTab {
     }
 }
 
+class Kill: Shoot() {
+    var source = ""
+
+    fun isKill() {
+        if (health <= 0 && teamChoice()) {
+            source = "Pistol"
+            counterTerrorists -= 1
+        }
+        else if (health <= 0 && !teamChoice()) {
+            terrorists -= 1
+        }
+    }
+
+    fun suicide() {
+        source = "Yourself"
+    }
+
+    fun bomb() {
+        source = "Terrorist Bomb"
+    }
+
+    fun friendly() {
+        source = "Your smart teammate"
+    }
+
+}
+
 fun main() {
-    val obj = Player()
+    val obj = Kill()
+    obj.teamChoice()
+    obj.shot()
+    obj.shot()
+    obj.shot()
+    obj.showHealth()
+    println("CounterTerrorists: ${obj.counterTerrorists}")
+    println("Terrorists: ${obj.terrorists}")
+    obj.isKill()
+    println("CounterTerrorists: ${obj.counterTerrorists}")
+    println("Terrorists: ${obj.terrorists}")
 
-    val obj1 = View()
+    //val obj2 = Move()
 
-    val obj2 = Move()
+    //val obj3 = Special()
 
-    val obj3 = Special()
+    //val obj4 = Shoot()
 
-    val obj4 = Shoot()
+    //val obj5 = Buy()
 
-    val obj5 = Buy()
+    //val obj7 = Kill()
 
-    val obj6 = Money()
+    //val obj8 = Player()
+    //obj8.showCrosshair()
+    //println(obj8.playerCrosshair)
 
-    val obj7 = Kill()
+    //val obj9 = Bomb()
 
-    val obj8 = Stats()
+    //val obj10 = Radar()
 
-    val obj9 = Bomb()
+    //val obj11 = PlayerTab()
 
-    val obj10 = Radar()
-
-    val obj11 = PlayerTab()
-
+    //val obj12 = Weapons()
+    //println(obj12.ctPistol.keys)
 }
