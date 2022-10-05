@@ -17,6 +17,7 @@ open class Game {
     var map = ""
 }
 
+// CHILD CLASS
 open class Player: Game() {
 
     private val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
@@ -62,6 +63,7 @@ open class Player: Game() {
     }
 }
 
+// GRANDCHILD CLASS
 class Move: Player() {
 
     // code in each function for changing position of player
@@ -87,6 +89,7 @@ class Move: Player() {
     }
 }
 
+// GRANDCHILD CLASS
 open class Shoot: Player() {
 
     fun shot() {
@@ -100,6 +103,7 @@ open class Shoot: Player() {
     }
 }
 
+// CHILD CLASS
 open class Weapons: Game() {
 
     var ctPistol = mapOf("USP-S" to 1, "Dual Berettas" to 2, "P250" to 3, "Five-SeveN" to 4, "Desert Eagle" to 5)
@@ -116,6 +120,7 @@ open class Weapons: Game() {
     var ctEquipment = mapOf("Kevlar Vest" to 1, "Kevlar + Helmet" to 2, "Zeus x27" to 3, "Defuse Kit" to 4)
 }
 
+// CHILD CLASS
 class Radar: Game() {
     // function to display the map
     private fun display() {
@@ -128,6 +133,7 @@ class Radar: Game() {
     }
 }
 
+// GRANDCHILD CLASS
 open class Buy: Weapons() {
 
     var categoryInput = ""
@@ -182,6 +188,7 @@ open class Buy: Weapons() {
     }
 }
 
+// GRAND-GRANDCHILD CLASS
 open class Stats: Buy() {
 
     private var ammo = mapOf("12/24" to 1, "30/120" to 2, "13/26" to 3, "20/100" to 4, "7/35" to 5,
@@ -231,6 +238,7 @@ open class Stats: Buy() {
     // fire-rate and others
 }
 
+// GRAND-GRAND-GRANDCHILD CLASS
 class Round: Stats() {
 
     private var isPlant = false
@@ -257,6 +265,7 @@ class Round: Stats() {
     }
 }
 
+// GRANDCHILD CLASS
 class PlayerTab: Player() {
     // changes the nr of ct and t when kill
     fun showTab() {
@@ -271,6 +280,7 @@ class PlayerTab: Player() {
     }
 }
 
+// GRAND-GRANDCHILD CLASS
 class Kill: Shoot() {
 
     private var source = ""
@@ -306,7 +316,6 @@ class Kill: Shoot() {
 
 fun main() {
     val obj = Kill()
-
     obj.shot()
     obj.shot()
     obj.showHealth()
@@ -326,26 +335,16 @@ fun main() {
     obj1.win()
     obj1.lose()
     println(obj1.armor)
-    //val obj2 = Move()
 
-    //val obj3 = Special()
+    val obj2 = Move()
+    obj2.crouch()
+    obj2.jump()
+    obj2.sneak()
+    println(obj2.location)
 
-    //val obj4 = Shoot()
+    val obj3 = Shoot()
+    obj3.shot()
 
-    //val obj5 = Buy()
-
-    //val obj7 = Kill()
-
-    //val obj8 = Player()
-    //obj8.showCrosshair()
-    //println(obj8.playerCrosshair)
-
-    //val obj9 = Bomb()
-
-    //val obj10 = Radar()
-
-    //val obj11 = PlayerTab()
-
-    //val obj12 = Weapons()
-    //println(obj12.ctPistol.keys)
+    val obj4 = PlayerTab()
+    obj4.reload()
 }
