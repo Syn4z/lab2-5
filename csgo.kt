@@ -6,8 +6,13 @@ open class Game {
     var armor = 0
     var playerCrosshair = ""
     val timer = 115
+    var bomb = true
+
     var counterTerrorists = 5
     var terrorists = 5
+
+    var location = ""
+    var map = ""
 }
 
 open class Player: Game() {
@@ -77,7 +82,6 @@ class Move: Player() {
 }
 
 class Special: Player() {
-    var location = ""
     // code to change the vertical position of player
     fun jump() {
         location = "Jump"
@@ -91,12 +95,6 @@ class Special: Player() {
         location = "Sneak"
     }
 
-    init {
-        crouch()
-        sneak()
-        jump()
-        println(location)
-    }
 }
 
 open class Shoot: Player() {
@@ -132,7 +130,7 @@ open class Weapons: Game() {
 
 class Stats: Weapons() {
 
-    var ammo = ""
+    private var ammo = ""
 
     fun ammo() {
         println("Input your weapon: ")
@@ -157,11 +155,10 @@ class Stats: Weapons() {
 }
 
 class Bomb: Game() {
-    var bomb = true
-    var isPlant = false
+    private var isPlant = false
 
     // function to drop the bomb
-    fun drop() {
+    private fun drop() {
         bomb = false
     }
 
@@ -177,9 +174,8 @@ class Bomb: Game() {
 }
 
 class Radar: Game() {
-    var map = ""
     // function to display the map
-    fun display() {
+    private fun display() {
         map = "1"
     }
 
@@ -196,7 +192,7 @@ class Radar: Game() {
 
 class Buy: Weapons() {
 
-    var balance = 800
+    private var balance = 800
 
     // operations to extract or add money
     fun win() {
@@ -208,43 +204,40 @@ class Buy: Weapons() {
     }
     // Buy menu
     fun read() {
-        var categoryChoice = ""
+        var categoryChoice = mapOf("" to 0)
         println("What type of weapon do you want to buy? ")
         val categoryInput = readLine()!!
         when (categoryInput.toInt()) {
-            1 -> categoryChoice = "pistol"
-            2 -> categoryChoice = "heavy"
-            3 -> categoryChoice = "smg"
-            4 -> categoryChoice = "rifle"
-            5 -> categoryChoice = "grenade"
-            6 -> categoryChoice = "equipment"
+            1 -> categoryChoice = ctPistol
+            2 -> categoryChoice = ctHeavy
+            3 -> categoryChoice = ctSmg
+            4 -> categoryChoice = ctRifle
+            5 -> categoryChoice = ctGrenade
+            6 -> categoryChoice = ctEquipment
             else -> "Not in categories!"
         }
         println("What model do you want to buy? ")
         val typeInput = readLine()!!
         when (typeInput.toInt()) {
             // the specific model of a category
-            1 -> println("You bought a: $categoryChoice")
-            2 -> println("You bought a: $categoryChoice")
-            3 -> println("You bought a: $categoryChoice")
-            4 -> println("You bought a: $categoryChoice")
-            5 -> println("You bought a: $categoryChoice")
-            6 -> println("You bought a: $categoryChoice")
+            1 -> println("You bought a: ${categoryChoice.filterValues { it == 1 }.keys}")
+            2 -> println("You bought a: ${categoryChoice.filterValues { it == 2 }.keys}")
+            3 -> println("You bought a: ${categoryChoice.filterValues { it == 3 }.keys}")
+            4 -> println("You bought a: ${categoryChoice.filterValues { it == 4 }.keys}")
+            5 -> println("You bought a: ${categoryChoice.filterValues { it == 5 }.keys}")
+            6 -> println("You bought a: ${categoryChoice.filterValues { it == 6 }.keys}")
             else -> "Not in the models!"
         }
     }
 
-    init {
-        read()
-    }
 }
 
 class PlayerTab: Player() {
 
     // changes the nr of ct and t when kill
-    fun change() {
-        counterTerrorists -= 1
-        terrorists -= 2
+    fun showTab() {
+        println("CounterTerrorists: $counterTerrorists")
+        println("Terrorists: $terrorists")
     }
 
     fun reload() {
@@ -253,22 +246,19 @@ class PlayerTab: Player() {
         terrorists = 5
     }
 
-    init {
-        change()
-        println("Terrorists: $terrorists")
-    }
 }
 
 class Kill: Shoot() {
-    var source = ""
+    private var source = ""
 
     fun isKill() {
         if ((counterTerrorists > 0) && (terrorists > 0)) {
-            var choice = (0..1).random()
+            val choice = (0..1).random()
             if ((health <= 0) && (choice == 0)) {
                 source = "Pistol"
                 counterTerrorists -= 1
             } else if ((health <= 0) && (choice == 1)) {
+                source = "Pistol"
                 terrorists -= 1
             }
         }
@@ -306,6 +296,9 @@ fun main() {
     println("CounterTerrorists: ${obj.counterTerrorists}")
     println("Terrorists: ${obj.terrorists}")
 
+
+    val obj1 = Buy()
+    obj1.read()
     //val obj2 = Move()
 
     //val obj3 = Special()
