@@ -1,7 +1,9 @@
 import kotlin.random.Random
 import kotlin.system.exitProcess
 
+// PARENT CLASS
 open class Game {
+
     var health = 100
     var armor = 0
     var playerCrosshair = ""
@@ -16,6 +18,7 @@ open class Game {
 }
 
 open class Player: Game() {
+
     private val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
     var playerPosition = listOf(0,0)
 
@@ -57,31 +60,19 @@ open class Player: Game() {
             println(time)
         }
     }
-
 }
 
 class Move: Player() {
 
     // code in each function for changing position of player
-    fun moveFront() {
+    fun moveFront() {}
 
-    }
+    fun moveBack() {}
 
-    fun moveBack() {
+    fun moveRight() {}
 
-    }
+    fun moveLeft() {}
 
-    fun moveRight() {
-
-    }
-
-    fun moveLeft() {
-
-    }
-
-}
-
-class Special: Player() {
     // code to change the vertical position of player
     fun jump() {
         location = "Jump"
@@ -94,7 +85,6 @@ class Special: Player() {
     fun sneak() {
         location = "Sneak"
     }
-
 }
 
 open class Shoot: Player() {
@@ -108,7 +98,6 @@ open class Shoot: Player() {
             armor -= 30
         }
     }
-
 }
 
 open class Weapons: Game() {
@@ -125,52 +114,6 @@ open class Weapons: Game() {
         "Smoke Grenade" to 5)
 
     var ctEquipment = mapOf("Kevlar Vest" to 1, "Kevlar + Helmet" to 2, "Zeus x27" to 3, "Defuse Kit" to 4)
-
-}
-
-class Stats: Weapons() {
-
-    private var ammo = ""
-
-    fun ammo() {
-        println("Input your weapon: ")
-        for (x in ctPistol.values) {
-            when (x) {
-                1 -> {ammo = "12/24"
-                    println(ammo)}
-                2 -> {ammo = "30/120"
-                    println(ammo)}
-                3 -> {ammo = "13/26"
-                    println(ammo)}
-                4 -> {ammo = "20/100"
-                    println(ammo)}
-                5 -> {ammo = "7/35"
-                    println(ammo)}
-            }
-        }
-    }
-        // need to get the stats for the specific gun in the directory
-        // damage and armor penetration
-        // fire-rate and others
-}
-
-class Bomb: Game() {
-    private var isPlant = false
-
-    // function to drop the bomb
-    private fun drop() {
-        bomb = false
-    }
-
-    // function to plant the bomb
-    fun plant() {
-        isPlant = true
-    }
-
-    init {
-        drop()
-        println(bomb)
-    }
 }
 
 class Radar: Game() {
@@ -183,57 +126,138 @@ class Radar: Game() {
     fun adjust() {
         map = "2"
     }
+}
 
-    init {
-        display()
-        println(map)
+open class Buy: Weapons() {
+
+    var categoryInput = ""
+    var typeInput = ""
+    private var oneMore = true
+    private var moreBuy = ""
+
+    protected var balance = 800
+
+    // Buy menu
+    fun read() {
+        while (oneMore) {
+            var categoryChoice = mapOf("" to 0)
+            println("What type of weapon do you want to buy? ")
+            categoryInput = readLine()!!
+            when (categoryInput.toInt()) {
+                1 -> categoryChoice = ctPistol
+                2 -> categoryChoice = ctHeavy
+                3 -> categoryChoice = ctSmg
+                4 -> categoryChoice = ctRifle
+                5 -> categoryChoice = ctGrenade
+                6 -> categoryChoice = ctEquipment
+                else -> println("Not in categories!")
+            }
+            println("What model do you want to buy? ")
+            typeInput = readLine()!!
+            when (typeInput.toInt()) {
+                // the specific model of a category
+                1 -> println("You bought a: ${categoryChoice.filterValues { it == 1 }.keys}")
+                2 -> println("You bought a: ${categoryChoice.filterValues { it == 2 }.keys}")
+                3 -> println("You bought a: ${categoryChoice.filterValues { it == 3 }.keys}")
+                4 -> println("You bought a: ${categoryChoice.filterValues { it == 4 }.keys}")
+                5 -> println("You bought a: ${categoryChoice.filterValues { it == 5 }.keys}")
+                6 -> println("You bought a: ${categoryChoice.filterValues { it == 6 }.keys}")
+                else -> println("Not in the models!")
+            }
+            if ((categoryChoice == ctEquipment) && (typeInput.toInt() == 1)) {
+                armor += 100
+            } else if ((categoryChoice == ctEquipment) && (typeInput.toInt() == 2)) {
+                armor += 200
+            }
+            println("Do you want to buy something else?(Y or N) ")
+            moreBuy = readLine()!!
+            if (moreBuy == "Y") {
+                oneMore = true
+                continue
+            } else {
+                oneMore = false
+                break
+            }
+        }
     }
 }
 
-class Buy: Weapons() {
+open class Stats: Buy() {
 
-    private var balance = 800
+    private var ammo = mapOf("12/24" to 1, "30/120" to 2, "13/26" to 3, "20/100" to 4, "7/35" to 5,
+        "8/32" to 6, "7/32" to 7, "5/32" to 8, "100/200" to 9, "150/300" to 10, "30/120" to 11, "30/120" to 12,
+        "25/100" to 13, "50/100" to 14, "64/120" to 15, "25/90" to 16, "20/80" to 17, "10/90" to 18, "30/90" to 19,
+        "10/30" to 20, "20/90" to 21)
+
+    fun ammo() {
+
+        when (categoryInput.toInt()) {
+            1 -> when (typeInput.toInt()) {
+                1 -> println("Weapon ammo: ${ammo.filterValues { it == 1 }.keys}")
+                2 -> println("Weapon ammo: ${ammo.filterValues { it == 2 }.keys}")
+                3 -> println("Weapon ammo: ${ammo.filterValues { it == 3 }.keys}")
+                4 -> println("Weapon ammo: ${ammo.filterValues { it == 4 }.keys}")
+                5 -> println("Weapon ammo: ${ammo.filterValues { it == 5 }.keys}")
+                else -> println("No weapon!")
+            }
+            2 -> when (typeInput.toInt()) {
+                1 -> println("Weapon ammo: ${ammo.filterValues { it == 6 }.keys}")
+                2 -> println("Weapon ammo: ${ammo.filterValues { it == 7 }.keys}")
+                3 -> println("Weapon ammo: ${ammo.filterValues { it == 8 }.keys}")
+                4 -> println("Weapon ammo: ${ammo.filterValues { it == 9 }.keys}")
+                5 -> println("Weapon ammo: ${ammo.filterValues { it == 10 }.keys}")
+                else -> println("No weapon!")
+            }
+            3 -> when (typeInput.toInt()) {
+                1 -> println("Weapon ammo: ${ammo.filterValues { it == 11 }.keys}")
+                2 -> println("Weapon ammo: ${ammo.filterValues { it == 12 }.keys}")
+                3 -> println("Weapon ammo: ${ammo.filterValues { it == 13 }.keys}")
+                4 -> println("Weapon ammo: ${ammo.filterValues { it == 14 }.keys}")
+                5 -> println("Weapon ammo: ${ammo.filterValues { it == 15 }.keys}")
+                else -> println("No weapon!")
+            }
+            4 -> when (typeInput.toInt()) {
+                1 -> println("Weapon ammo: ${ammo.filterValues { it == 16 }.keys}")
+                2 -> println("Weapon ammo: ${ammo.filterValues { it == 17 }.keys}")
+                3 -> println("Weapon ammo: ${ammo.filterValues { it == 18 }.keys}")
+                4 -> println("Weapon ammo: ${ammo.filterValues { it == 19 }.keys}")
+                5 -> println("Weapon ammo: ${ammo.filterValues { it == 20 }.keys}")
+                else -> println("No weapon!")
+            }
+        }
+    }
+    // need to get the stats for the specific gun in the directory
+    // damage and armor penetration
+    // fire-rate and others
+}
+
+class Round: Stats() {
+
+    private var isPlant = false
 
     // operations to extract or add money
     fun win() {
         balance += 200
+        println("You won the round, current balance: $balance")
     }
 
     fun lose() {
         balance += 50
-    }
-    // Buy menu
-    fun read() {
-        var categoryChoice = mapOf("" to 0)
-        println("What type of weapon do you want to buy? ")
-        val categoryInput = readLine()!!
-        when (categoryInput.toInt()) {
-            1 -> categoryChoice = ctPistol
-            2 -> categoryChoice = ctHeavy
-            3 -> categoryChoice = ctSmg
-            4 -> categoryChoice = ctRifle
-            5 -> categoryChoice = ctGrenade
-            6 -> categoryChoice = ctEquipment
-            else -> "Not in categories!"
-        }
-        println("What model do you want to buy? ")
-        val typeInput = readLine()!!
-        when (typeInput.toInt()) {
-            // the specific model of a category
-            1 -> println("You bought a: ${categoryChoice.filterValues { it == 1 }.keys}")
-            2 -> println("You bought a: ${categoryChoice.filterValues { it == 2 }.keys}")
-            3 -> println("You bought a: ${categoryChoice.filterValues { it == 3 }.keys}")
-            4 -> println("You bought a: ${categoryChoice.filterValues { it == 4 }.keys}")
-            5 -> println("You bought a: ${categoryChoice.filterValues { it == 5 }.keys}")
-            6 -> println("You bought a: ${categoryChoice.filterValues { it == 6 }.keys}")
-            else -> "Not in the models!"
-        }
+        println("You lost the round, current balance: $balance")
     }
 
+    // function to drop the bomb
+    private fun drop() {
+        bomb = false
+    }
+
+    // function to plant the bomb
+    fun plant() {
+        isPlant = true
+    }
 }
 
 class PlayerTab: Player() {
-
     // changes the nr of ct and t when kill
     fun showTab() {
         println("CounterTerrorists: $counterTerrorists")
@@ -245,10 +269,10 @@ class PlayerTab: Player() {
         counterTerrorists = 5
         terrorists = 5
     }
-
 }
 
 class Kill: Shoot() {
+
     private var source = ""
 
     fun isKill() {
@@ -278,7 +302,6 @@ class Kill: Shoot() {
     fun friendly() {
         source = "Your smart teammate"
     }
-
 }
 
 fun main() {
@@ -297,8 +320,12 @@ fun main() {
     println("Terrorists: ${obj.terrorists}")
 
 
-    val obj1 = Buy()
+    val obj1 = Round()
     obj1.read()
+    obj1.ammo()
+    obj1.win()
+    obj1.lose()
+    println(obj1.armor)
     //val obj2 = Move()
 
     //val obj3 = Special()
