@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="53351e90-6f4f-4364-a5d1-993e2d173645" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../csgo.kt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2FJ6WIl163AAyT3wI9zw7FhPVPY" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "last_opened_file_path": "/home/sorin/git_repository/lab2/csgo",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "show.migrate.to.gradle.popup": "false"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="53351e90-6f4f-4364-a5d1-993e2d173645" name="Changes" comment="" />
+      <created>1664197869587</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1664197869587</updated>
+      <workItem from="1664197871597" duration="280000" />
+      <workItem from="1664198626444" duration="8180000" />
+      <workItem from="1664218648038" duration="254000" />
+      <workItem from="1664274084647" duration="830000" />
+      <workItem from="1664277571602" duration="1692000" />
+      <workItem from="1664288130256" duration="5899000" />
+      <workItem from="1664375118166" duration="4196000" />
+      <workItem from="1664383011591" duration="2840000" />
+      <workItem from="1664454154439" duration="286000" />
+      <workItem from="1664461751408" duration="1812000" />
+      <workItem from="1664545923970" duration="131000" />
+      <workItem from="1664546737959" duration="9846000" />
+      <workItem from="1664603527329" duration="8455000" />
+      <workItem from="1664649490179" duration="2136000" />
+      <workItem from="1664808983949" duration="26000" />
+      <workItem from="1664972236480" duration="2286000" />
+      <workItem from="1664973807461" duration="8254000" />
+      <workItem from="1665059086524" duration="704000" />
+      <workItem from="1665136843082" duration="108000" />
+      <workItem from="1665590708848" duration="366000" />
+      <workItem from="1665591400212" duration="1380000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
