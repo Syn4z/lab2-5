@@ -2,6 +2,8 @@ open class Player: Game() {
     private val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
     private var isPlant = false
     var playerPosition = listOf(0,0)
+    val ctNames = listOf("Dave", "John", "Doug", "Chad", "Brian", "Cory", "Erik", "Finn", "Jim", "Seth")
+    val tNames = listOf("Arnold", "Brett", "Kurt", "Kyle", "Moe", "Quade", "Quintin", "Ringo", "Rip", "Zach")
 
     fun teamChoice(): Boolean {
         var result = true
@@ -18,11 +20,11 @@ open class Player: Game() {
     }
 
     fun showHealth() {
-        println("Your health is : $health")
+        println("The health is : $health")
     }
 
     fun showArmor() {
-        println("Your armor is : $armor")
+        println("The armor is : $armor")
     }
 
     fun showCrosshair() {
@@ -36,40 +38,20 @@ open class Player: Game() {
         }
     }
 
-    fun showTimer() {
-        for (time in timer..0) {
-            println(time)
-        }
-    }
-
-    fun moveFront() {}
-
-    fun moveBack() {}
-
-    fun moveRight() {}
-
-    fun moveLeft() {}
-
-    // code to change the vertical position of player
-    fun jump() {
-        location = "Jump"
-    }
-
-    fun crouch() {
-        location = "Crouch"
-    }
-
-    fun sneak() {
-        location = "Sneak"
-    }
-
     fun shot() {
-        println("You've been shot!")
-        // different conditions for each of weapons
-        health -= 50
-
-        if (armor != 0) {
-            armor -= 30
+        println("Shot!")
+        if (health > 0) {
+            if (armor > 100) {
+                health -= 25
+                armor -= 100
+            }
+            else if (armor == 100) {
+                health -= 50
+                armor -= 100
+            }
+            else {
+                health -= 100
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-abstract class Weapons: Game() {
+abstract class Weapons: Player() {
 
     var ctPistol = mapOf("USP-S" to 1, "Dual Berettas" to 2, "P250" to 3, "Five-SeveN" to 4, "Desert Eagle" to 5)
 

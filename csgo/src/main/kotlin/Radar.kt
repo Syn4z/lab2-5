@@ -1,4 +1,5 @@
-class Radar: Game() {
+interface Radar {
+    var map : String
     // function to display the map
     private fun display() {
         map = "1"

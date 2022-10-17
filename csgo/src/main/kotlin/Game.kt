@@ -9,5 +9,4 @@ open class Game {
     var terrorists = 5
 
     var location = ""
-    var map = ""
 }
