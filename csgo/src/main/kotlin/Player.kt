@@ -1,4 +1,4 @@
-open class Player: Game() {
+class Player(): Game() {
     private val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
     private var isPlant = false
     var playerPosition = listOf(0,0)
@@ -55,14 +55,56 @@ open class Player: Game() {
         }
     }
 
+    fun kill(weapon : List<String>, suicideOn : Boolean) {
+        fun randomShoot(n: Int, m: Int) {
+            val random = (n..m).random()
+            if (random == n) {
+                shot()
+            }
+        }
+        while ((counterTerrorists > 0) && (terrorists > 0)) {
+            randomShoot(0, 1)
+            val choice = (0..5).random()
+            if ((health <= 0) && (choice == 0 || choice == 2)) {
+                println("${ctNames[(0..9).random()]} was killed with ${weapon[(1..9).random()]}")
+                counterTerrorists -= 1
+                resetStats()
+            }
+            else if ((health <= 0) && (choice == 1 || choice == 4)) {
+                println("${tNames[(0..9).random()]} was killed with ${weapon[(1..9).random()]}")
+                terrorists -= 1
+                resetStats()
+            }
+            else if (suicideOn && (health <= 0) && (choice == 5)) {
+                println("${ctNames[(0..9).random()]} had committed suicide")
+            }
+            else if (suicideOn && (health <= 0) && (choice == 3)) {
+                println("${tNames[(0..9).random()]} had committed suicide")
+            }
+        }
+    }
+
     // function to drop the bomb
     private fun drop() {
         bomb = false
     }
 
     // function to plant the bomb
-    fun plant() {
-        isPlant = true
+    fun plant(isPlant : Boolean): Boolean {
+        var result = false
+        if (isPlant) {
+            bomb = true
+            println("\nBomb has been planted!")
+            val explode = (0..1).random()
+            if (explode == 0) {
+                println("\nBomb exploded!")
+                result = true
+            }
+            else if (explode == 1) {
+                println("\nCounterTerrorists defused the bomb")
+            }
+        }
+        return result
     }
 
     // changes the nr of ct and t when kill

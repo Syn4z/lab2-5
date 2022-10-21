@@ -1,8 +1,8 @@
-abstract class Buy: Weapons() {
-    var categoryInput = 0
-    var typeInput = 0
-    var categoryChoice = mapOf("" to 0)
-    var weapons = listOf("")
+open class Buy: Weapons() {
+    private var categoryInput = 0
+    private var typeInput = 0
+    private var categoryChoice = mapOf("" to 0)
+    override var weapons = listOf("")
     private var i = 10
     private var ammo = mapOf("12/24" to 1, "30/110" to 2, "13/26" to 3, "20/100" to 4, "7/35" to 5,
         "8/32" to 6, "7/32" to 7, "5/32" to 8, "100/200" to 9, "150/300" to 10, "30/130" to 11, "30/120" to 12,
@@ -12,7 +12,7 @@ abstract class Buy: Weapons() {
     protected var balance = 800
 
     // Buy menu
-    fun read() {
+    fun read(): List<String> {
         while (i > 0) {
             categoryInput = (1..6).random()
             when (categoryInput) {
@@ -46,7 +46,7 @@ abstract class Buy: Weapons() {
                 6 -> println("Weapon/Utility: ${categoryChoice.filterValues { it == 6 }.keys}")
             }
             if ((categoryInput != 5) && (categoryInput != 6)) {
-                weapons += categoryChoice.filterValues { it == typeInput }.keys.toString()
+                 weapons += categoryChoice.filterValues { it == typeInput }.keys.toString()
             }
             else {
                 weapons += ctPistol.filterValues { it == typeInput }.keys.toString()
@@ -92,5 +92,6 @@ abstract class Buy: Weapons() {
             }
             i -= 1
         }
+        return weapons
     }
 }
