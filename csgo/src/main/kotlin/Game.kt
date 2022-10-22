@@ -1,10 +1,10 @@
 open class Game {
     var health = 100
-    var armor = 0
+    open var armor = 0
     var playerCrosshair = ""
     val timer = 115
     var bomb = false
-    open var weapons = listOf("")
+    open var weapons = mutableListOf("")
 
     var counterTerrorists = 5
     var terrorists = 5

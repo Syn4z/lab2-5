@@ -2,17 +2,15 @@ open class Buy: Weapons() {
     private var categoryInput = 0
     private var typeInput = 0
     private var categoryChoice = mapOf("" to 0)
-    override var weapons = listOf("")
+    override var weapons: MutableList<String> = arrayListOf()
     private var i = 10
-    private var ammo = mapOf("12/24" to 1, "30/110" to 2, "13/26" to 3, "20/100" to 4, "7/35" to 5,
-        "8/32" to 6, "7/32" to 7, "5/32" to 8, "100/200" to 9, "150/300" to 10, "30/130" to 11, "30/120" to 12,
-        "25/100" to 13, "50/100" to 14, "64/120" to 15, "25/90" to 16, "20/80" to 17, "10/90" to 18, "30/90" to 19,
-        "10/30" to 20, "20/90" to 21)
+    override var armor = 0
 
-    protected var balance = 800
+    // --TO DO--
+    //protected var balance = 800
 
     // Buy menu
-    fun read(): List<String> {
+    fun read(): MutableList<String> {
         while (i > 0) {
             categoryInput = (1..6).random()
             when (categoryInput) {
@@ -49,7 +47,10 @@ open class Buy: Weapons() {
                  weapons += categoryChoice.filterValues { it == typeInput }.keys.toString()
             }
             else {
-                weapons += ctPistol.filterValues { it == typeInput }.keys.toString()
+                when ((1..2).random()) {
+                    1 -> weapons += ctPistol.filterValues { it == 1 }.keys.toString()
+                    2 -> weapons += ctPistol.filterValues { it == 3 }.keys.toString()
+                }
             }
             if ((categoryChoice == ctEquipment) && (typeInput == 1)) {
                 armor = 100
