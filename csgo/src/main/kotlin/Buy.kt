@@ -1,4 +1,10 @@
-open class Buy: Weapons() {
+class Buy: Weapons() {
+    override var bomb: Boolean = false
+    override var counterTerrorists: Int = 5
+    override var terrorists: Int = 5
+    override var health: Int = 100
+    override var timer: Int = 115
+    //
     private var categoryInput = 0
     private var typeInput = 0
     private var categoryChoice = mapOf("" to 0)

@@ -1,4 +1,6 @@
-abstract class Weapons: Game() {
+abstract class Weapons: Game {
+    abstract var weapons: MutableList<String>
+
     var ctPistol = mapOf("USP-S" to 1, "Dual Berettas" to 2, "P250" to 3, "Five-SeveN" to 4, "Desert Eagle" to 5)
 
     var ctHeavy = mapOf("Nova" to 1, "XM1014" to 2, "MAG-7" to 3, "M249" to 4, "Negev" to 5)

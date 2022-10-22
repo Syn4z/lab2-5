@@ -3,7 +3,8 @@ fun main() {
         println("New round started\n")
         var ctRounds = 0
         var tRounds = 0
-        val obj1 = Player()
+        val obj1 = Player(mutableListOf("John", "Chad", "Brian", "Cory", "Finn"),
+            mutableListOf("Arnold", "Kyle", "Ringo", "Rip", "Zach"))
         obj1.kill(Buy().read(), false, 0)
         println("\n\tROUND IS OVER")
         when {
@@ -25,7 +26,8 @@ fun main() {
         println("New round started\n")
         var ctRounds = 0
         var tRounds = 0
-        val obj1 = Player()
+        val obj1 = Player(mutableListOf("John", "Chad", "Brian", "Cory", "Finn"),
+            mutableListOf("Arnold", "Kyle", "Ringo", "Rip", "Zach"))
         obj1.kill(Buy().read(), true, 0)
         println("\n\tROUND IS OVER")
         if (obj1.counterTerrorists == 0) {
@@ -44,7 +46,8 @@ fun main() {
         println("New round started\n")
         var ctRounds = 0
         var tRounds = 0
-        val obj1 = Player()
+        val obj1 = Player(mutableListOf("John", "Chad", "Brian", "Cory", "Finn"),
+            mutableListOf("Arnold", "Kyle", "Ringo", "Rip", "Zach"))
         obj1.kill(Buy().read(), false, 0)
         if (obj1.plant(true)) {
             println("\n\tROUND IS OVER")
@@ -64,7 +67,8 @@ fun main() {
         println("New round started\n")
         var ctRounds = 0
         var tRounds = 0
-        val obj1 = Player()
+        val obj1 = Player(mutableListOf("John", "Chad", "Brian", "Cory", "Finn"),
+            mutableListOf("Arnold", "Kyle", "Ringo", "Rip", "Zach"))
         obj1.kill(Buy().read(), true, 0)
         if (obj1.plant(true)) {
             println("\n\tROUND IS OVER")
@@ -84,7 +88,8 @@ fun main() {
         println("New round started\n")
         var ctRounds = 0
         var tRounds = 0
-        val obj1 = Player()
+        val obj1 = Player(mutableListOf("John", "Chad", "Brian", "Cory", "Finn"),
+            mutableListOf("Arnold", "Kyle", "Ringo", "Rip", "Zach"))
         obj1.kill(Buy().read(), true, 0)
         println("\n\tROUND IS OVER")
         if (!obj1.plant(false)) {
@@ -106,7 +111,8 @@ fun main() {
         println("New round started\n")
         var ctRounds = 0
         var tRounds = 0
-        val obj1 = Player()
+        val obj1 = Player(mutableListOf("John", "Chad", "Brian", "Cory", "Finn"),
+            mutableListOf("Arnold", "Kyle", "Ringo", "Rip", "Zach"))
         obj1.kill(Buy().read(), true, 200)
         if (obj1.plant(true)) {
             println("\n\tROUND IS OVER")

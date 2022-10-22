@@ -1,24 +1,25 @@
-class Player: Game() {
+class Player(override val ctNames: MutableList<String>,
+             override val tNames: MutableList<String>
+): Game, Team, Move {
+    override val ctId: String = "(CT)"
+    override val tId: String = "(T)"
+    override var timer: Int = 115
+    override var armor: Int = 0
+    override var health: Int = 100
+    override var bomb: Boolean = false
+    override var counterTerrorists: Int = 5
+    override var terrorists: Int = 5
+    override var location: String = ""
+    var playerCrosshair: String = ""
     private val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
     //var playerPosition = listOf(0,0)
-    private var ctNames = mutableListOf("John", "Chad", "Brian", "Cory", "Finn")
-    private var tNames = mutableListOf("Arnold", "Kyle", "Ringo", "Rip", "Zach")
-    private val ctId = "(CT)"
-    private val tId = "(T)"
-
-    fun teamChoice(): Boolean {
-        var result = true
-        val choice = (0..1).random()
-        if (choice == 0) {
-            counterTerrorists =+ 1
-        }
-        else if (choice == 1) {
-            terrorists =+ 1
-            result = false
-        }
-
-        return result
-    }
+    override val moveFront: String = ""
+    override val moveBack: String = ""
+    override val moveRight: String = ""
+    override val moveLeft: String = ""
+    override val crouch: String = ""
+    override val jump: String = ""
+    override val sneak: String = ""
 
     fun showHealth() {
         println("The health is : $health")
@@ -88,29 +89,29 @@ class Player: Game() {
             randomShoot(0, 1, shuffledWeapon)
             val choice = (0..5).random()
             if ((health <= 0) && (choice == 0 || choice == 2)) {
-                ctNames = ctNames.shuffled().toMutableList()
-                println("$ctId${ctNames[0]} was killed by $tId${tNames[(0 until tNames.size).random()]} with ${shuffledWeapon[0]}")
+                val shuffledCtNames = ctNames.shuffled().toMutableList()
+                println("$ctId${shuffledCtNames[0]} was killed by $tId${tNames[(0 until tNames.size).random()]} with ${shuffledWeapon[0]}")
                 ctNames.removeAt(0)
                 counterTerrorists -= 1
                 resetStats()
             }
             else if ((health <= 0) && (choice == 1 || choice == 4)) {
-                tNames = tNames.shuffled().toMutableList()
-                println("$tId${tNames[0]} was killed by $ctId${ctNames[(0 until ctNames.size).random()]} with ${shuffledWeapon[0]}")
+                val shuffledTNames = tNames.shuffled().toMutableList()
+                println("$tId${shuffledTNames[0]} was killed by $ctId${ctNames[(0 until ctNames.size).random()]} with ${shuffledWeapon[0]}")
                 tNames.removeAt(0)
                 terrorists -= 1
                 resetStats()
             }
             else if (suicideOn && (health <= 0) && (choice == 5)) {
-                ctNames = ctNames.shuffled().toMutableList()
-                println("$ctId${ctNames[0]} had committed suicide")
+                val shuffledCtNames = ctNames.shuffled().toMutableList()
+                println("$ctId${shuffledCtNames[0]} had committed suicide")
                 ctNames.removeAt(0)
                 counterTerrorists -= 1
                 resetStats()
             }
             else if (suicideOn && (health <= 0) && (choice == 3)) {
-                tNames = tNames.shuffled().toMutableList()
-                println("$tId${tNames[0]} had committed suicide")
+                val shuffledTNames = tNames.shuffled().toMutableList()
+                println("$tId${shuffledTNames[0]} had committed suicide")
                 tNames.removeAt(0)
                 terrorists -= 1
                 resetStats()
@@ -145,5 +146,10 @@ class Player: Game() {
     fun showTab() {
         println("CounterTerrorists: $counterTerrorists")
         println("Terrorists: $terrorists")
+    }
+
+    private fun resetStats() {
+        health = 100
+        armor = 0
     }
 }
