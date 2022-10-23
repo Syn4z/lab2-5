@@ -10,8 +10,8 @@ class Player(override val ctNames: MutableList<String>,
     override var counterTerrorists: Int = 5
     override var terrorists: Int = 5
     override var location: String = ""
-    var playerCrosshair: String = ""
-    private val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
+    //var playerCrosshair: String = ""
+    //private val crosshair = mapOf("default" to 1, "cross" to 2, "square" to 3, "circle" to 4, "dot" to 5)
     //var playerPosition = listOf(0,0)
     override val moveFront: String = ""
     override val moveBack: String = ""
@@ -21,14 +21,19 @@ class Player(override val ctNames: MutableList<String>,
     override val jump: String = ""
     override val sneak: String = ""
 
+    private var shuffledCtNames = ctNames
+    private var shuffledTNames = tNames
+    /*
     fun showHealth() {
         println("The health is : $health")
     }
-
+     */
+    /*
     fun showArmor() {
         println("The armor is : $armor")
     }
-
+     */
+    /*
     fun showCrosshair() {
         println("Choose your crosshair: ")
         val playerInput = readln()
@@ -39,6 +44,7 @@ class Player(override val ctNames: MutableList<String>,
             4 -> playerCrosshair = crosshair.filterValues { it == 4 }.keys.toString()
         }
     }
+     */
 
     private fun shot(armorInput: Int) {
         armor = armorInput
@@ -89,30 +95,30 @@ class Player(override val ctNames: MutableList<String>,
             randomShoot(0, 1, shuffledWeapon)
             val choice = (0..5).random()
             if ((health <= 0) && (choice == 0 || choice == 2)) {
-                val shuffledCtNames = ctNames.shuffled().toMutableList()
-                println("$ctId${shuffledCtNames[0]} was killed by $tId${tNames[(0 until tNames.size).random()]} with ${shuffledWeapon[0]}")
-                ctNames.removeAt(0)
+                shuffledCtNames = shuffledCtNames.shuffled().toMutableList()
+                println("$ctId${shuffledCtNames[0]} was killed by $tId${shuffledTNames[(0 until shuffledTNames.size).random()]} with ${shuffledWeapon[0]}")
+                shuffledCtNames.removeAt(0)
                 counterTerrorists -= 1
                 resetStats()
             }
             else if ((health <= 0) && (choice == 1 || choice == 4)) {
-                val shuffledTNames = tNames.shuffled().toMutableList()
-                println("$tId${shuffledTNames[0]} was killed by $ctId${ctNames[(0 until ctNames.size).random()]} with ${shuffledWeapon[0]}")
-                tNames.removeAt(0)
+                shuffledTNames = shuffledTNames.shuffled().toMutableList()
+                println("$tId${shuffledTNames[0]} was killed by $ctId${shuffledCtNames[(0 until shuffledCtNames.size).random()]} with ${shuffledWeapon[0]}")
+                shuffledTNames.removeAt(0)
                 terrorists -= 1
                 resetStats()
             }
             else if (suicideOn && (health <= 0) && (choice == 5)) {
-                val shuffledCtNames = ctNames.shuffled().toMutableList()
+                shuffledCtNames = shuffledCtNames.shuffled().toMutableList()
                 println("$ctId${shuffledCtNames[0]} had committed suicide")
-                ctNames.removeAt(0)
+                shuffledCtNames.removeAt(0)
                 counterTerrorists -= 1
                 resetStats()
             }
             else if (suicideOn && (health <= 0) && (choice == 3)) {
-                val shuffledTNames = tNames.shuffled().toMutableList()
+                shuffledTNames = shuffledTNames.shuffled().toMutableList()
                 println("$tId${shuffledTNames[0]} had committed suicide")
-                tNames.removeAt(0)
+                shuffledTNames.removeAt(0)
                 terrorists -= 1
                 resetStats()
             }
@@ -120,9 +126,11 @@ class Player(override val ctNames: MutableList<String>,
     }
 
     // function to drop the bomb
+    /*
     private fun drop() {
         bomb = false
     }
+     */
 
     // function to plant the bomb
     fun plant(isPlant : Boolean): Boolean {
@@ -142,11 +150,13 @@ class Player(override val ctNames: MutableList<String>,
         return result
     }
 
-    // changes the nr of ct and t when kill
+    // shows how many ct and t are alive or dead
+    /*
     fun showTab() {
         println("CounterTerrorists: $counterTerrorists")
         println("Terrorists: $terrorists")
     }
+     */
 
     private fun resetStats() {
         health = 100

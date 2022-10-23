@@ -128,9 +128,9 @@ fun main() {
         println("\n\t CT won: $ctRounds rounds; T won: $tRounds rounds\n")
     }
 
-    // suicide off without bomb
+    // suicide off, without bomb
     firstScenario()
-    // suicide on without bomb
+    // suicide on, without bomb
     secondScenario()
     // suicide off, bomb planted
     thirdScenario()
@@ -147,8 +147,9 @@ fun main() {
         var tRounds = 0
         while (j < 31) {
             println("New Round started, round nr: $j\n")
-            val obj1 = Player()
-            obj1.kill(Buy().read(), false)
+            val obj1 = Player(mutableListOf("John", "Chad", "Brian", "Cory", "Finn"),
+            mutableListOf("Arnold", "Kyle", "Ringo", "Rip", "Zach"))
+            obj1.kill(Buy().read(), false, 0)
             if (obj1.counterTerrorists == 0) {
                 println("\n\tTerrorists Win!")
                 tRounds += 1
