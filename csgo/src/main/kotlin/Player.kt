@@ -21,6 +21,9 @@ class Player(override val ctNames: MutableList<String>,
     override val jump: String = ""
     override val sneak: String = ""
 
+    override var ctBalance: Int = 800
+    override var tBalance: Int = 800
+
     private var shuffledCtNames = ctNames
     private var shuffledTNames = tNames
     /*
@@ -99,6 +102,7 @@ class Player(override val ctNames: MutableList<String>,
                 println("$ctId${shuffledCtNames[0]} was killed by $tId${shuffledTNames[(0 until shuffledTNames.size).random()]} with ${shuffledWeapon[0]}")
                 shuffledCtNames.removeAt(0)
                 counterTerrorists -= 1
+                ctBalance += 100
                 resetStats()
             }
             else if ((health <= 0) && (choice == 1 || choice == 4)) {

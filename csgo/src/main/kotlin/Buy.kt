@@ -13,7 +13,8 @@ class Buy: Weapons() {
     override var armor = 0
 
     // --TO DO--
-    //protected var balance = 800
+    override var ctBalance: Int = 800
+    override var tBalance: Int = 800
 
     // Buy menu
     fun read(): MutableList<String> {
