@@ -9,16 +9,18 @@ class Buy: Weapons() {
     private var typeInput = 0
     private var categoryChoice = mapOf("" to 0)
     override var weapons: MutableList<String> = arrayListOf()
-    private var i = 10
+    private var i = 0
     override var armor = 0
 
     // --TO DO--
     override var ctBalance: Int = 800
     override var tBalance: Int = 800
 
+    var utility: MutableList<String> = arrayListOf()
+
     // Buy menu
-    fun read(): MutableList<String> {
-        while (i > 0) {
+    fun read(n: Int): MutableList<String> {
+        while (i < n) {
             categoryInput = (1..6).random()
             when (categoryInput) {
                 1 -> categoryChoice = ctPistol
@@ -54,9 +56,9 @@ class Buy: Weapons() {
                  weapons += categoryChoice.filterValues { it == typeInput }.keys.toString()
             }
             else {
-                when ((1..2).random()) {
-                    1 -> weapons += ctPistol.filterValues { it == 1 }.keys.toString()
-                    2 -> weapons += ctPistol.filterValues { it == 3 }.keys.toString()
+                when (categoryInput) {
+                    5 -> utility += categoryChoice.filterValues { it == typeInput }.keys.toString()
+                    6 -> utility += categoryChoice.filterValues { it == typeInput }.keys.toString()
                 }
             }
             if ((categoryChoice == ctEquipment) && (typeInput == 1)) {
@@ -98,8 +100,22 @@ class Buy: Weapons() {
                     6 -> println("Ammo: ${ammo.filterValues { it == 21 }.keys}")
                 }
             }
-            i -= 1
+            i++
         }
+        return weapons
+    }
+
+    fun ecoRound(): MutableList<String> {
+        var i = 0
+        println("\nEco buy:")
+        while (i < 5) {
+            val random = (1..4).random()
+            println("Weapon/Utility: ${ctPistol.filterValues { it == random }.keys}")
+            weapons += ctPistol.filterValues { it == random }.keys.toString()
+            i++
+        }
+        println("\nOther team buy:")
+        read(5)
         return weapons
     }
 }

@@ -1,3 +1,5 @@
+import java.util.*
+
 class Player(override val ctNames: MutableList<String>,
              override val tNames: MutableList<String>
 ): Game, Team, Move {
@@ -51,53 +53,66 @@ class Player(override val ctNames: MutableList<String>,
 
     private fun shot(armorInput: Int) {
         armor = armorInput
+        val lowDamage = listOf(10, 25, 50, 75)
+        val highDamage = listOf(10, 25, 50, 75, 100)
         println("Shot!")
         if (health > 0) {
-            when (armorInput) {
+            when (armor) {
                 200 -> {
-                    health -= 25
-                    armor -= 100
+                    health -= lowDamage.random()
+                    armor -= lowDamage.random()
 
                 }
                 100 -> {
-                    health -= 50
-                    armor -= 100
+                    health -= highDamage.random()
+                    armor -= highDamage.random()
                 }
                 else -> {
-                    health -= 100
+                    health -= highDamage.random()
                 }
             }
         }
     }
 
-    fun kill(weapon : MutableList<String>, suicideOn : Boolean, armorInput: Int) {
-        println("\n")
-        fun randomShoot(n: Int, m: Int, shuffledWeapon: MutableList<String>) {
-            val random = (0..1).random()
-            if (random == 1) {
-                if ("[AWP]" == shuffledWeapon[0] || "[Desert Eagle]" == shuffledWeapon[0] || "[MAG-7]" == shuffledWeapon[0]) {
-                    println("Shot!")
-                    health -= 100
-                    armor -= 200
-                } else {
-                    val randomChoice = (n..m).random()
-                    if (randomChoice == n) {
-                        shot(armorInput)
-                    }
-                }
-            }
-            else {
-                val randomChoice = (n..m).random()
-                if (randomChoice == n) {
-                    shot(armorInput)
-                }
+    private fun randomShoot(armorInput: Int): Boolean {
+        var result = false
+        val random = (0..1).random()
+        val headshot = (0..9).random()
+        if (random == 1) {
+            if (headshot == 1 && armor <= 100) {
+                println("HeadShot!")
+                health -= 100
+                armor -= 100
+                result = true
+            } else if (headshot == 1 && armor == 200) {
+                println("HeadShot! Helmet broke!")
+                health -= 50
+                armor -= 100
+                result = true
+            } else {
+                shot(armorInput)
+                result = false
             }
         }
+        return result
+    }
+
+    fun kill(weapon : MutableList<String>, suicideOn : Boolean, armorInput: Int, eco: Boolean) {
+        println("\n")
+
         while ((counterTerrorists > 0) && (terrorists > 0)) {
-            val shuffledWeapon = weapon.shuffled().toMutableList()
-            randomShoot(0, 1, shuffledWeapon)
-            val choice = (0..5).random()
-            if ((health <= 0) && (choice == 0 || choice == 2)) {
+            val shuffledWeapon: MutableList<String> = if (eco){
+                weapon.slice(0..5).shuffled().toMutableList()
+            } else {
+                weapon.shuffled().toMutableList()
+            }
+            val head = randomShoot(armorInput)
+            val choice = (0..2).random()
+            var suicide = 0
+            if (suicideOn) {
+                suicide = (0..5).random()
+            }
+            if ((health <= 0) && (choice == 1)) {
                 shuffledCtNames = shuffledCtNames.shuffled().toMutableList()
                 println("$ctId${shuffledCtNames[0]} was killed by $tId${shuffledTNames[(0 until shuffledTNames.size).random()]} with ${shuffledWeapon[0]}")
                 shuffledCtNames.removeAt(0)
@@ -105,25 +120,28 @@ class Player(override val ctNames: MutableList<String>,
                 ctBalance += 100
                 resetStats()
             }
-            else if ((health <= 0) && (choice == 1 || choice == 4)) {
+            else if ((health <= 0) && (choice == 2)) {
                 shuffledTNames = shuffledTNames.shuffled().toMutableList()
                 println("$tId${shuffledTNames[0]} was killed by $ctId${shuffledCtNames[(0 until shuffledCtNames.size).random()]} with ${shuffledWeapon[0]}")
                 shuffledTNames.removeAt(0)
                 terrorists -= 1
+                tBalance += 100
                 resetStats()
             }
-            else if (suicideOn && (health <= 0) && (choice == 5)) {
+            else if (suicide == 1 && (health <= 0) && !head) {
                 shuffledCtNames = shuffledCtNames.shuffled().toMutableList()
                 println("$ctId${shuffledCtNames[0]} had committed suicide")
                 shuffledCtNames.removeAt(0)
                 counterTerrorists -= 1
+                tBalance += 50
                 resetStats()
             }
-            else if (suicideOn && (health <= 0) && (choice == 3)) {
+            else if (suicide == 3 && (health <= 0) && !head) {
                 shuffledTNames = shuffledTNames.shuffled().toMutableList()
                 println("$tId${shuffledTNames[0]} had committed suicide")
                 shuffledTNames.removeAt(0)
                 terrorists -= 1
+                ctBalance += 50
                 resetStats()
             }
         }
@@ -137,18 +155,23 @@ class Player(override val ctNames: MutableList<String>,
      */
 
     // function to plant the bomb
-    fun plant(isPlant : Boolean): Boolean {
+    fun plant(isPlant : Boolean, weapons: MutableList<String>): Boolean {
         var result = false
         if (isPlant) {
-            bomb = true
-            println("\nBomb has been planted!")
-            val explode = (0..1).random()
-            if (explode == 0) {
-                println("\nBomb exploded!")
-                result = true
-            }
-            else if (explode == 1) {
-                println("\nCounterTerrorists defused the bomb")
+            val planted = (0..1).random()
+            if (planted == 1) {
+                bomb = true
+                println("\nBomb has been planted!")
+                val explode = (0..1).random()
+                if (explode == 0) {
+                    println("\nBomb exploded!")
+                    result = true
+                } else if (explode == 1 && "[Defuse Kit]" in weapons) {
+                    println("\nCounterTerrorists defused the bomb")
+                } else {
+                    println("\nBomb exploded!")
+                    result = true
+                }
             }
         }
         return result
