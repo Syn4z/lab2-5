@@ -1,4 +1,3 @@
-import java.util.*
 
 class Player(override val ctNames: MutableList<String>,
              override val tNames: MutableList<String>
@@ -110,7 +109,7 @@ class Player(override val ctNames: MutableList<String>,
             val choice = (0..2).random()
             var suicide = 0
             if (suicideOn) {
-                suicide = (0..5).random()
+                suicide = (0..30).shuffled().last()
             }
             if ((health <= 0) && (choice == 1)) {
                 shuffledCtNames = shuffledCtNames.shuffled().toMutableList()
@@ -128,7 +127,7 @@ class Player(override val ctNames: MutableList<String>,
                 tBalance += 100
                 resetStats()
             }
-            else if (suicide == 1 && (health <= 0) && !head) {
+            else if (suicide == 2 && (health <= 0) && !head) {
                 shuffledCtNames = shuffledCtNames.shuffled().toMutableList()
                 println("$ctId${shuffledCtNames[0]} had committed suicide")
                 shuffledCtNames.removeAt(0)
@@ -136,7 +135,7 @@ class Player(override val ctNames: MutableList<String>,
                 tBalance += 50
                 resetStats()
             }
-            else if (suicide == 3 && (health <= 0) && !head) {
+            else if (suicide == 4 && (health <= 0) && !head) {
                 shuffledTNames = shuffledTNames.shuffled().toMutableList()
                 println("$tId${shuffledTNames[0]} had committed suicide")
                 shuffledTNames.removeAt(0)

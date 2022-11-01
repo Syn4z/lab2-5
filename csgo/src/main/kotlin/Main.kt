@@ -27,7 +27,7 @@ fun main() {
                     //result = "CounterTerrorists"
                     tEco = true
                 }
-               
+
                 if (ctEco) {
                     println("CounterTerrorists lost 3 round in a row: $ctRounds VS $tRounds \nThey have an Economic round")
                     obj1.kill(weapons.ecoRound(), true, 0, ctEco)
