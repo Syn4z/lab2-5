@@ -5,10 +5,7 @@ fun main() {
         while (true) {
             println("Match nr: $matchCount")
             var j = 1
-            var ctRounds = 0
-            var tRounds = 0
-            var ctStreak = 0
-            var tStreak = 0
+            var ctRounds = 0; var tRounds = 0; var ctStreak = 0; var tStreak = 0
             while (j < 31) {
                 println("New Round started, round nr: $j\n")
                 val obj1 = Player(
@@ -18,8 +15,7 @@ fun main() {
                 val weapons = Buy()
                 val utility = weapons.utility
 
-                var ctEco = false
-                var tEco = false
+                var ctEco = false; var tEco = false
                 if (ctStreak == 3) {
                     //result = "CounterTerrorists"
                     ctEco = true

@@ -60,7 +60,6 @@ class Player(override val ctNames: MutableList<String>,
                 200 -> {
                     health -= lowDamage.random()
                     armor -= lowDamage.random()
-
                 }
                 100 -> {
                     health -= highDamage.random()
