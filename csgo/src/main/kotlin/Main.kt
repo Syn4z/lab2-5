@@ -31,7 +31,7 @@ fun main() {
                     println("Terrorists lost 3 round in a row: $tRounds VS $ctRounds \nThey have an Economic round")
                     obj1.kill(weapons.ecoRound(), true, 0, tEco)
                 } else {
-                    obj1.kill(weapons.read(5), true, 200, ctEco)
+                    obj1.kill(weapons.read(10), true, 200, ctEco)
                 }
                 if (obj1.plant(true, utility)) {
                     println("\n\tROUND IS OVER")
